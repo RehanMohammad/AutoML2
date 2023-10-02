@@ -11,19 +11,19 @@ from supervised.automl import AutoML
 import os
 import shutil
 
-application = Flask(__name__)
-application.config['SECRET_KEY'] = 'mysecretkey'
-application.config['UPLOAD_FOLDER'] = './uploads'
-application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'mysecretkey'
+app.config['UPLOAD_FOLDER'] = './uploads'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-application.config['SECRET_KEY'] = 'thisisasecretkey'
-db = SQLAlchemy(application)
-bcrypt = Bcrypt(application)
+app.config['SECRET_KEY'] = 'thisisasecretkey'
+db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 
 login_manager = LoginManager()
-login_manager.init_application(application)
+login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
@@ -44,12 +44,18 @@ class ModelTrainingForm(FlaskForm):
                              choices=[('60', '60'), ('120', '120'), ('240', '240'), ('300', '300')])
     submit = SubmitField('Start Training')
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # username = db.Column(db.String(20), nullable=False, unique=True)
     email= db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     data_added= db.column(db.DateTime)
+    
+with app.app_context():
+        db.create_all()
+        users = User.query.all()
+        print(users)
+
 
 
 class RegisterForm(FlaskForm):
@@ -78,24 +84,21 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-
-
-
-@application.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
     form = DataUploadForm()
     if form.validate_on_submit():
-        if not os.path.exists(application.config['UPLOAD_FOLDER']):
-            os.makedirs(application.config['UPLOAD_FOLDER'])
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
 
-        filepath = os.path.join(application.config['UPLOAD_FOLDER'], form.file.data.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], form.file.data.filename)
         form.file.data.save(filepath)
 
         return redirect(url_for('train_model', filepath=filepath))
     return render_template('home.html', form=form)
 
 
-@application.route('/train', methods=['GET', 'POST'])
+@app.route('/train', methods=['GET', 'POST'])
 def train_model():
     filepath = request.args.get('filepath')
     form = ModelTrainingForm()
@@ -112,7 +115,7 @@ def train_model():
     return render_template('train.html', form=form)
 
 
-@application.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -120,24 +123,25 @@ def login():
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('home'))
+
     return render_template('login.html', form=form)
 
 
-@application.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     return render_template('dashboard.html')
 
 
-@application.route('/logout', methods=['GET', 'POST'])
+@app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 
-@ application.route('/register', methods=['GET', 'POST'])
+@ app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
 
@@ -147,11 +151,10 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
-
     return render_template('register.html', form=form)
 
 
-
-
 if __name__ == "__main__":
-    application.run(debug= True)
+   
+
+    app.run(debug= True)
