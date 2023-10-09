@@ -1,0 +1,16 @@
+if (Signal_74 <= 0.072) and (Signal_33 > 0.044) and (Signal_71 <= 0.105) then response: 5.245 | based on 323 samples
+
+if (Signal_74 <= 0.072) and (Signal_33 <= 0.044) and (Signal_10 <= 0.064) then response: 5.203 | based on 136 samples
+
+if (Signal_74 <= 0.072) and (Signal_33 > 0.044) and (Signal_71 > 0.105) then response: 5.3 | based on 115 samples
+
+if (Signal_74 > 0.072) and (Signal_45 > 0.068) and (Signal_9 > 0.092) then response: 5.354 | based on 71 samples
+
+if (Signal_74 > 0.072) and (Signal_45 <= 0.068) and (Signal_47 > 0.016) then response: 5.263 | based on 63 samples
+
+if (Signal_74 > 0.072) and (Signal_45 > 0.068) and (Signal_9 <= 0.092) then response: 5.272 | based on 34 samples
+
+if (Signal_74 > 0.072) and (Signal_45 <= 0.068) and (Signal_47 <= 0.016) then response: 5.074 | based on 4 samples
+
+if (Signal_74 <= 0.072) and (Signal_33 <= 0.044) and (Signal_10 > 0.064) then response: 5.418 | based on 4 samples
+

@@ -1,70 +1,5 @@
-
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--<head>-->
-<!--    <title>Upload Data</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<form method="post" enctype="multipart/form-data">-->
-<!--    {{ form.hidden_tag() }}-->
-<!--    {{ form.file.label }}: {{ form.file() }}<br>-->
-<!--    {{ form.submit() }}-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Upload Data</title>-->
-<!--    <style>-->
-<!--        /* Add your styling here */-->
-<!--        /* ... */-->
-<!--    </style>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--    <form id="upload-form" enctype="multipart/form-data">-->
-<!--        <input type="file" id="file-input" name="file"><br>-->
-<!--        <input type="button" value="Upload" onclick="previewFile()">-->
-<!--    </form>-->
-<!--    <img id="preview" src="" alt="Image Preview Here" style="max-width:200px; max-height:200px;">-->
-<!--    <script>-->
-<!--        function previewFile() {-->
-<!--            const preview = document.getElementById('preview');-->
-<!--            const file = document.querySelector('input[type=file]').files[0];-->
-<!--            const reader = new FileReader();-->
-
-<!--            reader.addEventListener("load", function () {-->
-<!--                // Convert image file to a data URL-->
-<!--                preview.src = reader.result;-->
-<!--            }, false);-->
-
-<!--            if (file) {-->
-<!--                reader.readAsDataURL(file);-->
-<!--            }-->
-<!--        }-->
-<!--    </script>-->
-<!--</body>-->
-
-<!--</html>-->
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +13,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            min-height: 10vh;
         }
 
         form {
@@ -95,7 +30,7 @@
         }
 
         input[type="file"] {
-            padding: 10px;
+            padding: 5px;
             margin-bottom: 20px;
             background-color: #f8f8f8;
             border: 1px solid #ddd;
@@ -109,6 +44,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+           border: 5px solid #fff;
         }
 
         input[type="submit"]:hover {
@@ -118,11 +54,18 @@
 </head>
 
 <body>
+    <div">
+        <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+    </div>
+
     <form method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <label>{{ form.file.label }}</label>
         {{ form.file(style='width:100%;') }}
+        {{ form.x_columns.label }}: {{ form.x_columns() }}<br>
+        {{ form.y_column.label }}: {{ form.y_column() }}<br>
         <br>
+        
         {{ form.submit() }}
     </form>
 </body>

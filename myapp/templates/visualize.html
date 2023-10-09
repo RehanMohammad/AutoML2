@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pandas Dataframe Display</title>
+    <style>
+    .image {
+        width: 200px;
+    }
+
+        .data {
+            border-collapse: collapse;
+            border: 2px solid black;
+            margin: 20px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .data thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .data th,
+        .data td {
+            padding: 12px 15px;
+        }
+
+        .data tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .data tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .data tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+    </style>
+</head>
+<body>
+    
+    {{ form.hidden_tag() }}
+    <h1> Data Display</h1>
+    {% for table in tables %}
+        {{ table|safe }}
+    {% endfor %} 
+
+
+    <br>
+        {{ form.submit() }}
+</body>
+</html>

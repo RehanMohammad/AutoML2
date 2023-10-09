@@ -1,0 +1,14 @@
+if (Signal_1 <= 0.071) and (Signal_1 > 0.043) and (Signal_1 > 0.043) then response: 5.257 | based on 624 samples
+
+if (Signal_1 > 0.071) and (Signal_1 > 0.071) and (Signal_1 > 0.073) then response: 5.276 | based on 52 samples
+
+if (Signal_1 > 0.071) and (Signal_1 > 0.071) and (Signal_1 <= 0.073) then response: 5.317 | based on 32 samples
+
+if (Signal_1 <= 0.071) and (Signal_1 <= 0.043) and (Signal_1 <= 0.042) then response: 5.225 | based on 31 samples
+
+if (Signal_1 <= 0.071) and (Signal_1 <= 0.043) and (Signal_1 > 0.042) then response: 5.165 | based on 9 samples
+
+if (Signal_1 > 0.071) and (Signal_1 <= 0.071) then response: 5.523 | based on 1 samples
+
+if (Signal_1 <= 0.071) and (Signal_1 > 0.043) and (Signal_1 <= 0.043) then response: 5.455 | based on 1 samples
+

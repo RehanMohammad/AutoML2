@@ -1,0 +1,16 @@
+if (Neighborhood <= 1.5) and (Brick <= 0.5) and (Bedrooms <= 3.5) then response: 102700.0 | based on 22 samples
+
+if (Neighborhood > 1.5) and (SqFt > 1890.0) and (Bathrooms > 2.5) then response: 168412.5 | based on 8 samples
+
+if (Neighborhood <= 1.5) and (Brick > 0.5) and (Neighborhood <= 0.5) then response: 139325.0 | based on 8 samples
+
+if (Neighborhood > 1.5) and (SqFt <= 1890.0) and (Home > 27.5) then response: 133325.0 | based on 4 samples
+
+if (Neighborhood <= 1.5) and (Brick > 0.5) and (Neighborhood > 0.5) then response: 113050.0 | based on 4 samples
+
+if (Neighborhood > 1.5) and (SqFt > 1890.0) and (Bathrooms <= 2.5) then response: 147700.0 | based on 3 samples
+
+if (Neighborhood <= 1.5) and (Brick <= 0.5) and (Bedrooms > 3.5) then response: 133050.0 | based on 2 samples
+
+if (Neighborhood > 1.5) and (SqFt <= 1890.0) and (Home <= 27.5) then response: 145800.0 | based on 1 samples
+
