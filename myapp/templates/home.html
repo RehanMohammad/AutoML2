@@ -62,8 +62,8 @@
         {{ form.hidden_tag() }}
         <label>{{ form.file.label }}</label>
         {{ form.file(style='width:100%;') }}
-        {{ form.x_columns.label }}: {{ form.x_columns() }}<br>
-        {{ form.y_column.label }}: {{ form.y_column() }}<br>
+        {{ form.x_columns.label }}{{ form.x_columns() }}<br>
+        {{ form.y_column.label }}{{ form.y_column() }}<br>
         <br>
         
         {{ form.submit() }}

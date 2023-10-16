@@ -42,15 +42,15 @@
     </style>
 </head>
 <body>
+    <form method="post" enctype="multipart/form-data">
     
     {{ form.hidden_tag() }}
     <h1> Data Display</h1>
     {% for table in tables %}
         {{ table|safe }}
     {% endfor %} 
-
-
     <br>
-        {{ form.submit() }}
+    {{ form.submit() }}
+</form>
 </body>
 </html>

@@ -138,7 +138,19 @@ def load_user(user_id):
 
 class DataUploadForm(FlaskForm):
     file = FileField('Upload CSV with training data', validators=[DataRequired()])
+    # visualize = SubmitField ('Data Visualization')
+    x_columns = StringField('Input features (comma-separated)', validators=[DataRequired()])
+    y_column = StringField('Target column', validators=[DataRequired()])
     submit = SubmitField('Upload and Proceed')
+
+# class DataUploadForm(FlaskForm):
+#     file = FileField('Upload CSV with training data', validators=[DataRequired()])
+#     submit = SubmitField('Upload and Proceed')
+class SUBMITFORTRAINForm(FlaskForm):
+    
+    submit = SubmitField('Proceed')
+
+
 class ModelTrainingForm(FlaskForm):
     x_columns = StringField('Input features (comma-separated)', validators=[DataRequired()])
     y_column = StringField('Target column', validators=[DataRequired()])
@@ -246,7 +258,7 @@ class EditProfileAdminForm(FlaskForm):
 
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -255,7 +267,7 @@ def login():
             login_user(user, form.remember_me.data)
             next = request.args.get('next')
             if next is None or not next.startswith('/'):
-                next = url_for('index')
+                next = url_for('home')
             return redirect(next)
         flash('Invalid email or password.')
     # return render_template('auth/login.html')
@@ -281,7 +293,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('auth/register.html', form=form)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
     form = DataUploadForm()
@@ -292,13 +304,12 @@ def home():
         form.file.data.save(filepath)
         x=form.x_columns.data.split(',')
         y=form.y_column.data
-        # df = pd.read_csv(form.file.data.filename) 
         return redirect(url_for('visualize', filepath=filepath,x=x , y=y))
     return render_template('home.html', form=form)
 
 @app.route('/visualize', methods=['GET', 'POST'])
 def visualize():
-    form = SUBMITFORTrainingForm()
+    form = SUBMITFORTRAINForm()
     filepath = request.args.get('filepath')
     x=request.args.get('x')
     y=request.args.get('y')
@@ -314,9 +325,8 @@ def visualize():
     # # image_path = os.path.join(current_app.config['myapp\static\images'], 'plot.jpg')
     # image_path = "../static/images/plot.png"
     # plt.savefig(os.path.join('../static/images', 'plot.jpg') )
-
-    if form.validate_on_submit():  
-        return redirect(url_for('train', filepath=filepath, x=x, y=y))
+    if form.validate_on_submit():         
+        return redirect(url_for('train', filepath=filepath,x=x , y=y))
     return render_template('visualize.html', form=form,tables=[df.head().to_html(classes='data', header="true")] #,
                            #user_image= image_path                  
                            )
