@@ -304,17 +304,18 @@ def home():
         form.file.data.save(filepath)
         x=form.x_columns.data.split(',')
         y=form.y_column.data
-        return redirect(url_for('visualize', filepath=filepath,x=x , y=y))
+        return redirect(url_for('visualize', filepath=filepath,x=x, y=y))
     return render_template('home.html', form=form)
 
 @app.route('/visualize', methods=['GET', 'POST'])
 def visualize():
-    form = SUBMITFORTRAINForm()
+    form = SUBMITFORTrainingForm()
     filepath = request.args.get('filepath')
+    xx=request.args.get('x')
     x=request.args.get('x')
     y=request.args.get('y')
     df = pd.read_csv(filepath) 
-    plt.scatter(x, y, data=df) 
+    plt.scatter(xx, y, data=df) 
     plt.xlabel('X label') 
     plt.ylabel('Y label')      
     plt.show() 
@@ -325,34 +326,30 @@ def visualize():
     # # image_path = os.path.join(current_app.config['myapp\static\images'], 'plot.jpg')
     # image_path = "../static/images/plot.png"
     # plt.savefig(os.path.join('../static/images', 'plot.jpg') )
+    
     if form.validate_on_submit():         
-        return redirect(url_for('train', filepath=filepath,x=x , y=y))
-    return render_template('visualize.html', form=form,tables=[df.head().to_html(classes='data', header="true")] #,
-                           #user_image= image_path                  
-                           )
+        return redirect(url_for('train', filepath=filepath))
+    return render_template('visualize.html',form=form,tables=[df.head().to_html(classes='data', header="true")])
 @app.route('/train', methods=['GET', 'POST'])
 def train():    
     filepath = request.args.get('filepath')
-    x=request.args.get('x')
-    y=request.args.get('y')
     form = ModelTrainingForm()
     if form.validate_on_submit():
         df = pd.read_csv(filepath)
+        
         automl = AutoML(mode=form.mode.data, algorithms=form.algorithms.data.split(','),
                         total_time_limit=int(form.time_limit.data))
-        automl.fit(df[x.split(',')], df[y])
+        automl.fit(df[form.x_columns.data.split(',')], df[form.y_column.data])
         # post.body = automl
         model_path = "./result_model"
         # automl.select_and_save_best()
         post = Post(body=automl.report().data, author=current_user._get_current_object())
         db.session.add(post)
         db.session.commit()
-
         flash('The Model has been created.')
 
         # Store results for downloading (if needed)
         # ... (similar to your previous code)
-
         return render_template('results.html', automl=automl)
     return render_template('train.html', form=form)
 

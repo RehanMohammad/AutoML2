@@ -4,12 +4,21 @@
     <title>Train Model</title>
 </head>
 <body>
-<form method="post">
-    {{ form.hidden_tag() }}
-    {{ form.mode.label }}: {{ form.mode() }}<br>
-    {{ form.algorithms.label }}: {{ form.algorithms() }}<br>
-    {{ form.time_limit.label }}: {{ form.time_limit() }}<br>
-    {{ form.submit() }}
-</form>
+
+    <form method="post" >
+        {{ form.hidden_tag() }}
+        <label>{{ form.x_columns.label }}</label>
+        {{ form.x_columns }}<br>
+        <label>{{ form.y_column.label }}</label>
+        {{ form.y_column }}<br>
+
+        <label>{{ form.mode.label }}</label>
+        {{ form.mode }}<br>
+        <label>{{ form.algorithms.label }}</label>
+        {{ form.algorithms }}<br>
+        <label>{{ form.time_limit.label }}</label>
+        {{ form.time_limit }}<br>
+        {{ form.submit() }}
+    </form>
 </body>
 </html>
