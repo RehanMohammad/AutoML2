@@ -6,6 +6,8 @@
 <body>
 
     <form method="post" >
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
         {{ form.hidden_tag() }}
         <label>{{ form.x_columns.label }}</label>
         {{ form.x_columns }}<br>

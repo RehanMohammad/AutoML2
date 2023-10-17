@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +7,11 @@
 </head>
 <body>
 <h2>Training Completed</h2>
+<li><a href="{{ url_for('home') }}">Home</a></li>
+<li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
 <p>{{ automl.report() }}</p>
 
 </body>
 </html>
+
+

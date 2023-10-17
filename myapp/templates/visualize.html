@@ -45,6 +45,8 @@
     <form method="post" enctype="multipart/form-data">
     
     {{ form.hidden_tag() }}
+    <li><a href="{{ url_for('home') }}">Home</a></li>
+    <li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>
     <h1> Data Display</h1>
     {% for table in tables %}
         {{ table|safe }}
